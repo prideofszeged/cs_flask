@@ -73,7 +73,7 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated', 'sucess')
+        flash('Your account has been updated', 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
