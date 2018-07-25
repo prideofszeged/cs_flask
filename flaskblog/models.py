@@ -23,6 +23,14 @@ class User(db.Model, UserMixin):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decoder('utf-8')
 
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
