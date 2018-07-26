@@ -2,7 +2,7 @@ from flask import Blueprint
 
 posts = Blueprint('posts', __name__)
 
-@app.route("/post/new", methods=['GET', 'POST'])
+@posts.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
     form = PostForm()
@@ -14,13 +14,13 @@ def new_post():
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form, legend='New Post')
 
-@app.route("/post/<int:post_id>")
+@posts.route("/post/<int:post_id>")
 def post(post_id):
     post= Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
 
 @login_required
-@app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+@posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 def update_post(post_id):
     post= Post.query.get_or_404(post_id)
     if post.author != current_user:
@@ -38,7 +38,7 @@ def update_post(post_id):
     return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
 
 @login_required
-@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@posts.route("/post/<int:post_id>/delete", methods=['POST'])
 def delete_post(post_id):
     post= Post.query.get_or_404(post_id)
     if post.author != current_user:
